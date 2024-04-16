@@ -13,6 +13,8 @@
 
 //Graphics Libraries
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.*;
 import javax.swing.JFrame;
@@ -22,7 +24,7 @@ import javax.swing.JPanel;
 //*******************************************************************************
 // Class Definition Section
 
-public class BasicGameApp implements Runnable {
+public class BasicGameApp implements Runnable, KeyListener {
 
    //Variable Definition Section
    //Declare the variables used in the program 
@@ -39,6 +41,7 @@ public class BasicGameApp implements Runnable {
    
 	public BufferStrategy bufferStrategy;
 	public Image astroPic;
+	public Image mazePic;
 
    //Declare the objects used in the program
    //These are things that are made up of more than one variable type
@@ -67,12 +70,13 @@ public class BasicGameApp implements Runnable {
       //create (construct) the objects needed for the game and load up 
 		astroPic = Toolkit.getDefaultToolkit().getImage("astronaut.png"); //load the picture
 		astro = new Astronaut(10,100);
+		mazePic = Toolkit.getDefaultToolkit().getImage("maze.jpeg");
 
-		aAstro = new Astronaut[100];
-		for(int i=0 ;  i< aAstro.length; i++){
-		aAstro[i] = new Astronaut((int)(Math.random()*1001), ((int)(Math.random()*700)));
+		//aAstro = new Astronaut[100];
+		//for(int i=0 ;  i< aAstro.length; i++){
+		//aAstro[i] = new Astronaut((int)(Math.random()*1001), ((int)(Math.random()*700)));
 
-		}
+		//}
 	}// BasicGameApp()
 
    
@@ -89,7 +93,7 @@ public class BasicGameApp implements Runnable {
 		while (true) {
 
          moveThings();  //move all the game objects
-		checkIntersections();
+
          render();  // paint the graphics
          pause(20); // sleep for 10 ms
 		}
@@ -101,13 +105,12 @@ public class BasicGameApp implements Runnable {
       //calls the move( ) code in the objects
 		astro.move();
 		for(int i=0; i< aAstro.length ; i++){
+
 		aAstro[i].bounce();
+			if (aAstro[i].rec.intersects(astro.rec)) {
+				System.out.println("INTERSECTED!!");
 	}
 	}
-	public void checkIntersections() {
-		if (aAstro.intersects(astro.rec)) {
-			System.out.println("INTERSECTED!!");
-		}
 	}
 	
    //Pauses or sleeps the computer for the amount specified in milliseconds
@@ -132,6 +135,7 @@ public class BasicGameApp implements Runnable {
       // and trap input events (Mouse and Keyboard events)
       canvas = new Canvas();  
       canvas.setBounds(0, 0, WIDTH, HEIGHT);
+	  canvas.addKeyListener(this);
       canvas.setIgnoreRepaint(true);
    
       panel.add(canvas);  // adds the canvas to the panel.
@@ -157,7 +161,9 @@ public class BasicGameApp implements Runnable {
 		g.clearRect(0, 0, WIDTH, HEIGHT);
 
       //draw the image of the astronaut
+		g.drawImage(mazePic, 0, 0, WIDTH, HEIGHT, null);
 		g.drawImage(astroPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
+
 	for (int i=0; i< aAstro.length; i++) {
 		g.drawImage(astroPic, aAstro[i].xpos, aAstro[i].ypos, aAstro[i].width, aAstro[i].height, null);
 
@@ -165,5 +171,24 @@ public class BasicGameApp implements Runnable {
 		g.dispose();
 
 		bufferStrategy.show();
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+	System.out.println("pressed key"+ e.getKeyChar()+ "with key code" + e.getKeyCode());
+		if (e.getKeyCode() == 32) {
+			System.out.println("space bar");
+		}
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+
 	}
 }
