@@ -44,14 +44,18 @@ public class BasicGameApp implements Runnable, KeyListener {
 	public Image mazePic;
 	public Image clownPic;
 	public Image stevePic;
+	public Image jasonPic;
+	public Image knifePic;
 
 	//Declare the objects used in the program
 	//These are things that are made up of more than one variable type
 	private Astronaut astro;
 
-	public Astronaut[] aAstro;
+	public Astronaut[] aKnife;
 	public Astronaut clown;
 	public Astronaut steve;
+	public Astronaut jason;
+	public int score;
 
 
 	// Main method definition
@@ -76,14 +80,20 @@ public class BasicGameApp implements Runnable, KeyListener {
 		astro = new Astronaut(10, 100);
 		mazePic = Toolkit.getDefaultToolkit().getImage("maze.jpeg");
 		clownPic = Toolkit.getDefaultToolkit().getImage("clown1.png");
+		clown = new Astronaut(10, 100);
 		stevePic = Toolkit.getDefaultToolkit().getImage("steve.png");
+		steve = new Astronaut(100, 10);
+		jasonPic = Toolkit.getDefaultToolkit().getImage("jason.png");
+		jason= new Astronaut(300, 50);
+		knifePic = Toolkit.getDefaultToolkit().getImage("knife.png");
 
 
-		//aAstro = new Astronaut[100];
-		//for(int i=0 ;  i< aAstro.length; i++){
-		//aAstro[i] = new Astronaut((int)(Math.random()*1001), ((int)(Math.random()*700)));
 
-		//}
+		aKnife = new Astronaut[10];
+		for(int i=0 ;  i< aKnife.length; i++){
+		aKnife[i] = new Astronaut((int)(Math.random()*1001),0);
+
+		}
 	} //BasicGameApp()
 
 
@@ -110,122 +120,126 @@ public class BasicGameApp implements Runnable, KeyListener {
 	public void moveThings() {
 		//calls the move( ) code in the objects
 		astro.move();
-		//for(int i=0; i< aAstro.length ; i++){
+		for(int i=0; i< aKnife.length ; i++) {
+		}
 		clown.move();
 		steve.move();
+		jason.move();
 
 		//aAstro[i].bounce();
 		//	if (aAstro[i].rec.intersects(astro.rec)) {
 		//	System.out.println("INTERSECTED!!");
 	}
-//	}
-		public void checkIntersections () {
-			if (steve.rec.intersects(clown.rec)) {
-				steve.isAlive = false;
-				System.out.println("INTERSECTED");
-				//score -= 1;
-			}
+
+	//	}
+	public void checkIntersections() {
+		if (steve.rec.intersects(clown.rec)) {
+			steve.isAlive = false;
+			System.out.println("INTERSECTED");
+			score -= 1;
 		}
+	}
 
-		//Pauses or sleeps the computer for the amount specified in milliseconds
-		public void pause ( int time ){
-			//sleep
-			try {
-				Thread.sleep(time);
-			} catch (InterruptedException e) {
-
-			}
-		}
-
-		//Graphics setup method
-		private void setUpGraphics () {
-			frame = new JFrame("Application Template");   //Create the program window or frame.  Names it.
-
-			panel = (JPanel) frame.getContentPane();  //sets up a JPanel which is what goes in the frame
-			panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));  //sizes the JPanel
-			panel.setLayout(null);   //set the layout
-
-			// creates a canvas which is a blank rectangular area of the screen onto which the application can draw
-			// and trap input events (Mouse and Keyboard events)
-			canvas = new Canvas();
-			canvas.setBounds(0, 0, WIDTH, HEIGHT);
-			canvas.addKeyListener(this);
-			canvas.setIgnoreRepaint(true);
-
-			panel.add(canvas);  // adds the canvas to the panel.
-
-			// frame operations
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  //makes the frame close and exit nicely
-			frame.pack();  //adjusts the frame and its contents so the sizes are at their default or larger
-			frame.setResizable(false);   //makes it so the frame cannot be resized
-			frame.setVisible(true);      //IMPORTANT!!!  if the frame is not set to visible it will not appear on the screen!
-
-			// sets up things so the screen displays images nicely.
-			canvas.createBufferStrategy(2);
-			bufferStrategy = canvas.getBufferStrategy();
-			canvas.requestFocus();
-			System.out.println("DONE graphic setup");
+	//Pauses or sleeps the computer for the amount specified in milliseconds
+	public void pause(int time) {
+		//sleep
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
 
 		}
+	}
+
+	//Graphics setup method
+	private void setUpGraphics() {
+		frame = new JFrame("Application Template");   //Create the program window or frame.  Names it.
+
+		panel = (JPanel) frame.getContentPane();  //sets up a JPanel which is what goes in the frame
+		panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));  //sizes the JPanel
+		panel.setLayout(null);   //set the layout
+
+		// creates a canvas which is a blank rectangular area of the screen onto which the application can draw
+		// and trap input events (Mouse and Keyboard events)
+		canvas = new Canvas();
+		canvas.setBounds(0, 0, WIDTH, HEIGHT);
+		canvas.addKeyListener(this);
+		canvas.setIgnoreRepaint(true);
+
+		panel.add(canvas);  // adds the canvas to the panel.
+
+		// frame operations
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  //makes the frame close and exit nicely
+		frame.pack();  //adjusts the frame and its contents so the sizes are at their default or larger
+		frame.setResizable(false);   //makes it so the frame cannot be resized
+		frame.setVisible(true);      //IMPORTANT!!!  if the frame is not set to visible it will not appear on the screen!
+
+		// sets up things so the screen displays images nicely.
+		canvas.createBufferStrategy(2);
+		bufferStrategy = canvas.getBufferStrategy();
+		canvas.requestFocus();
+		System.out.println("DONE graphic setup");
+
+	}
 
 
-		//paints things on the screen using bufferStrategy
-		private void render () {
-			Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
-			g.clearRect(0, 0, WIDTH, HEIGHT);
+	//paints things on the screen using bufferStrategy
+	private void render() {
+		Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
+		g.clearRect(0, 0, WIDTH, HEIGHT);
 
-			//draw the image of the astronaut
+		//draw the image of the astronaut
 
-			g.drawImage(mazePic, 0, 0, WIDTH, HEIGHT, null);
-			clown = new Astronaut(10, 100);
+		g.drawImage(mazePic, 0, 0, WIDTH, HEIGHT, null);
 
-			g.drawImage(clownPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
-			g.drawImage(stevePic, astro.xpos, astro.ypos, astro.width, astro.height, null);
-
-
-			//g.drawImage(astroPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
+		g.drawImage(clownPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
+		g.drawImage(stevePic, steve.xpos, steve.ypos, steve.width, steve.height, null);
+		g.drawImage(jasonPic, jason.xpos, jason.ypos, jason.width, jason.height, null);
 
 
-			//for (int i=0; i< aAstro.length; i++) {
-			//g.drawImage(astroPic, aAstro[i].xpos, aAstro[i].ypos, aAstro[i].width, aAstro[i].height, null);
+		g.fillRect(195, 190, 70, 15);
+		g.setColor(Color.red);
+		g.drawString("Score:" + score, 200, 200);
 
-			//}
-			g.dispose();
+		for (int i=0; i< aKnife.length; i++) {
+		g.drawImage(knifePic, aKnife[i].xpos, aKnife[i].ypos, aKnife[i].width, aKnife[i].height, null);
 
-			bufferStrategy.show();
+		}
+		g.dispose();
+
+		bufferStrategy.show();
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		System.out.println("pressed key" + e.getKeyChar() + "with key code" + e.getKeyCode());
+		if (e.getKeyCode() == 32) {
+			System.out.println("space bar");
+		}
+		if (e.getKeyCode() == 65) {
+			steve.dx = -3;
+			steve.dy = 0;
+		}
+		if (e.getKeyCode() == 87) {
+			steve.dx = 0;
+			steve.dy = -3;
 		}
 
-		@Override
-		public void keyTyped (KeyEvent e){
-
+		if (e.getKeyCode() == 68) {
+			steve.dx = 3;
+			steve.dy = 0;
 		}
 
-		@Override
-		public void keyPressed (KeyEvent e){
-			System.out.println("pressed key" + e.getKeyChar() + "with key code" + e.getKeyCode());
-			if (e.getKeyCode() == 32) {
-				System.out.println("space bar");
+		if (e.getKeyCode() == 83) {
+			steve.dx = 0;
+			steve.dy = 3;
+		}
+	}
 
-				if (e.getKeyCode() == 65) {
-					steve.dx = -3;
-					steve.dy = 0;
-				}
-				if (e.getKeyCode() == 87) {
-					steve.dx = 0;
-					steve.dy = -3;
-				}
-
-				if (e.getKeyCode() == 68) {
-					steve.dx = 3;
-					steve.dy = 0;
-				}
-
-				if (e.getKeyCode() == 83) {
-					steve.dx = 0;
-					steve.dy = 3;
-				}
-			}
-			}
 
 
 
