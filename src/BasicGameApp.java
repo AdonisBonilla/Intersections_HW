@@ -121,6 +121,7 @@ public class BasicGameApp implements Runnable, KeyListener {
 		//calls the move( ) code in the objects
 		astro.move();
 		for(int i=0; i< aKnife.length ; i++) {
+			aKnife[i].move();
 		}
 		clown.move();
 		steve.move();
@@ -177,7 +178,6 @@ public class BasicGameApp implements Runnable, KeyListener {
 		canvas.createBufferStrategy(2);
 		bufferStrategy = canvas.getBufferStrategy();
 		canvas.requestFocus();
-		System.out.println("DONE graphic setup");
 
 	}
 
@@ -197,7 +197,7 @@ public class BasicGameApp implements Runnable, KeyListener {
 
 
 		g.fillRect(195, 190, 70, 15);
-		g.setColor(Color.red);
+		g.setColor(Color.blue);
 		g.drawString("Score:" + score, 200, 200);
 
 		for (int i=0; i< aKnife.length; i++) {

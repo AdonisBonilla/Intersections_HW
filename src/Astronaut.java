@@ -73,6 +73,10 @@ public class Astronaut {
 
     }
 
+    public void knifedrop(){
+
+    }
+
 }
 
 
