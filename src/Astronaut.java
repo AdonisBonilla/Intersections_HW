@@ -37,6 +37,8 @@ public class Astronaut {
         isAlive = true;
         rec= new Rectangle(xpos, ypos, width, height);
 
+
+
     } // constructor
 
     //The move method.  Everytime this is run (or "called") the hero's x position and y position change by dx and dy
@@ -59,10 +61,10 @@ public class Astronaut {
         if (xpos < 5) {
             dx = -dx;
         }
-        if (ypos > 950) {
+        if (ypos > 700) {
             dy = -dy;
         }
-        if (ypos < 20) {
+        if (ypos < 0) {
             dy = -dy;
 
 

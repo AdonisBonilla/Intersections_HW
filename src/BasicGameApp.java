@@ -92,6 +92,7 @@ public class BasicGameApp implements Runnable, KeyListener {
 		aKnife = new Astronaut[10];
 		for(int i=0 ;  i< aKnife.length; i++){
 		aKnife[i] = new Astronaut((int)(Math.random()*1001),0);
+		aKnife[i].dy=5;
 
 		}
 	} //BasicGameApp()
@@ -123,13 +124,14 @@ public class BasicGameApp implements Runnable, KeyListener {
 		for(int i=0; i< aKnife.length ; i++) {
 			aKnife[i].move();
 		}
-		clown.move();
+		clown.bounce();
 		steve.move();
-		jason.move();
+		jason.bounce();
 
-		//aAstro[i].bounce();
-		//	if (aAstro[i].rec.intersects(astro.rec)) {
-		//	System.out.println("INTERSECTED!!");
+		//aKnife[i].bounce();
+	//		if (aKnife[i]. <1000); {
+		//	dx=-dx;
+
 	}
 
 	//	}
