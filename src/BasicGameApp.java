@@ -94,6 +94,8 @@ public class BasicGameApp implements Runnable, KeyListener {
 		aKnife[i] = new Astronaut((int)(Math.random()*1001),0);
 		aKnife[i].dy=5;
 
+
+
 		}
 	} //BasicGameApp()
 
@@ -122,11 +124,12 @@ public class BasicGameApp implements Runnable, KeyListener {
 		//calls the move( ) code in the objects
 		astro.move();
 		for(int i=0; i< aKnife.length ; i++) {
-			aKnife[i].move();
+			aKnife[i].bounce();
 		}
 		clown.bounce();
 		steve.move();
 		jason.bounce();
+		checkIntersections();
 
 		//aKnife[i].bounce();
 	//		if (aKnife[i]. <1000); {
@@ -136,10 +139,22 @@ public class BasicGameApp implements Runnable, KeyListener {
 
 	//	}
 	public void checkIntersections() {
+
+
+
+
 		if (steve.rec.intersects(clown.rec)) {
 			steve.isAlive = false;
 			System.out.println("INTERSECTED");
 			score -= 1;
+		}
+		for(int i=0 ;  i< aKnife.length; i++) {
+
+			if (steve.rec.intersects(aKnife[i].rec)) {
+
+				aKnife[i].isAlive = false;
+				score -= 1;
+			}
 		}
 	}
 
@@ -203,7 +218,9 @@ public class BasicGameApp implements Runnable, KeyListener {
 		g.drawString("Score:" + score, 200, 200);
 
 		for (int i=0; i< aKnife.length; i++) {
-		g.drawImage(knifePic, aKnife[i].xpos, aKnife[i].ypos, aKnife[i].width, aKnife[i].height, null);
+			if(aKnife[i].isAlive) {
+				g.drawImage(knifePic, aKnife[i].xpos, aKnife[i].ypos, aKnife[i].width, aKnife[i].height, null);
+			}
 
 		}
 		g.dispose();
