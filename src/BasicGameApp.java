@@ -46,6 +46,8 @@ public class BasicGameApp implements Runnable, KeyListener {
 	public Image stevePic;
 	public Image jasonPic;
 	public Image knifePic;
+	public Image finishPic;
+	public Image winPic;
 
 	//Declare the objects used in the program
 	//These are things that are made up of more than one variable type
@@ -55,6 +57,7 @@ public class BasicGameApp implements Runnable, KeyListener {
 	public Astronaut clown;
 	public Astronaut steve;
 	public Astronaut jason;
+	public Astronaut finishline;
 	public int score;
 
 
@@ -76,9 +79,13 @@ public class BasicGameApp implements Runnable, KeyListener {
 
 		//variable and objects
 		//create (construct) the objects needed for the game and load up
+
+		finishPic = Toolkit.getDefaultToolkit().getImage("finish.png");
+		finishline = new Astronaut(725, 550);
+		winPic = Toolkit.getDefaultToolkit().getImage("winscreen.png");
 		astroPic = Toolkit.getDefaultToolkit().getImage("astronaut.png"); //load the picture
 		astro = new Astronaut(10, 100);
-		mazePic = Toolkit.getDefaultToolkit().getImage("maze.jpeg");
+		mazePic = Toolkit.getDefaultToolkit().getImage("mazepic2.png");
 		clownPic = Toolkit.getDefaultToolkit().getImage("clown1.png");
 		clown = new Astronaut(10, 100);
 		stevePic = Toolkit.getDefaultToolkit().getImage("steve.png");
@@ -86,6 +93,7 @@ public class BasicGameApp implements Runnable, KeyListener {
 		jasonPic = Toolkit.getDefaultToolkit().getImage("jason.png");
 		jason= new Astronaut(300, 50);
 		knifePic = Toolkit.getDefaultToolkit().getImage("knife.png");
+
 
 
 
@@ -143,11 +151,15 @@ public class BasicGameApp implements Runnable, KeyListener {
 
 
 
+
+
 		if (steve.rec.intersects(clown.rec)) {
 			steve.isAlive = false;
 			System.out.println("INTERSECTED");
 			score -= 1;
 		}
+
+
 		for(int i=0 ;  i< aKnife.length; i++) {
 
 			if (steve.rec.intersects(aKnife[i].rec)) {
@@ -204,6 +216,11 @@ public class BasicGameApp implements Runnable, KeyListener {
 		Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
 		g.clearRect(0, 0, WIDTH, HEIGHT);
 
+		if (steve.rec.intersects(finishline.rec)) {
+			g.drawImage(winPic, 1000, 500, WIDTH, HEIGHT, null);
+		}
+
+
 		//draw the image of the astronaut
 
 		g.drawImage(mazePic, 0, 0, WIDTH, HEIGHT, null);
@@ -211,9 +228,12 @@ public class BasicGameApp implements Runnable, KeyListener {
 		g.drawImage(clownPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
 		g.drawImage(stevePic, steve.xpos, steve.ypos, steve.width, steve.height, null);
 		g.drawImage(jasonPic, jason.xpos, jason.ypos, jason.width, jason.height, null);
+		g.drawImage(finishPic, 725, 550, 50, 100, null);
 
 
-		g.fillRect(195, 190, 70, 15);
+
+
+		g.fillRect(195, 190, 75, 75);
 		g.setColor(Color.blue);
 		g.drawString("Score:" + score, 200, 200);
 
@@ -221,6 +241,7 @@ public class BasicGameApp implements Runnable, KeyListener {
 			if(aKnife[i].isAlive) {
 				g.drawImage(knifePic, aKnife[i].xpos, aKnife[i].ypos, aKnife[i].width, aKnife[i].height, null);
 			}
+
 
 		}
 		g.dispose();

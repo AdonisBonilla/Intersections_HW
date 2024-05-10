@@ -35,8 +35,7 @@ public class Astronaut {
         width = 60;
         height = 60;
         isAlive = true;
-        rec= new Rectangle(xpos, ypos, width, height);
-
+        rec = new Rectangle(xpos, ypos, width, height);
 
 
     } // constructor
@@ -45,8 +44,10 @@ public class Astronaut {
     public void move() {
         xpos = xpos + dx;
         ypos = ypos + dy;
-        rec= new Rectangle(xpos, ypos, width, height);
-
+        rec = new Rectangle(xpos, ypos, width, height);
+        if(xpos >950) {
+            xpos = 0;
+        }
 
 
     }
@@ -61,7 +62,7 @@ public class Astronaut {
         if (xpos < 5) {
             dx = -dx;
         }
-        if (ypos > 700) {
+        if (ypos > 650) {
             dy = -dy;
         }
         if (ypos < 0) {
@@ -69,14 +70,17 @@ public class Astronaut {
 
 
         }
+
+
         xpos = xpos + dx;
         ypos = ypos + dy;
-        rec= new Rectangle(xpos, ypos, width, height);
+        rec = new Rectangle(xpos, ypos, width, height);
 
     }
 
-
 }
+
+
 
 
 
